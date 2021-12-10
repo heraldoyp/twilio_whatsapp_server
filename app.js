@@ -16,6 +16,12 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 
 // define routes
+app.get('/', (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('This is twilio server.');
+})
+
 app.post('/api/send-sms', (req, res) => {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
