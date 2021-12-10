@@ -22,17 +22,6 @@ app.post('/api/send-sms', (req, res) => {
     const from = process.env.TWILIO_PHONE_NUMBER;
     const msgService = process.env.TWILIO_MSG_SERVICES;
 
-    // format to E.164
-    if (to.slice(0,1) !== '+') {
-        if (to.slice(0,1) === '0') {
-            to = '62' + to.slice(1);
-        } else if (to.slice(0,2) !== '62') {
-            to = '62' + to;
-        }
-    
-        to = '+' + to;
-    }
-
     const client = require('twilio')(accountSid, authToken);
 
     client.messages
@@ -43,12 +32,12 @@ app.post('/api/send-sms', (req, res) => {
         messagingServiceSid: msgService,
     })
     .then(message => {
-        // res.send(message);
-        console.log(message);
+        // console.log(message);
+        res.send(message);
     })
     .catch(error => {
-        // res.send(error);
-        console.log(error);
+        // console.log(error);
+        res.send(error);
     });
 });
 
