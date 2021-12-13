@@ -32,8 +32,8 @@ app.post('/api/send-sms', (req, res) => {
 
     client.messages
     .create({
-        body: req.body.messageBody,
-        to: req.body.messageTo,
+        body: 'test send sms w/ standalone server app', //req.body.messageBody,
+        to: '+6282298524375', //req.body.messageTo,
         from: from,
         messagingServiceSid: msgService,
     })
