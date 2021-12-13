@@ -32,8 +32,8 @@ app.post('/api/send-sms', (req, res) => {
 
     client.messages
     .create({
-        body: 'Hello from Server-side!',
-        to: '+6282298524375',
+        body: req.body.messageBody,
+        to: req.body.messageTo,
         from: from,
         messagingServiceSid: msgService,
     })
@@ -50,4 +50,4 @@ app.post('/api/send-sms', (req, res) => {
 // create server
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
-  });
+});
