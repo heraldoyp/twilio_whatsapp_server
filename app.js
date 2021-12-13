@@ -30,25 +30,32 @@ app.post('/api/send-sms', (req, res) => {
 
     const client = require('twilio')(accountSid, authToken);
 
-    console.log("---start---");
+    console.log('---start req---');
     console.log(req);
-    console.log("---end---");
+    console.log('---end req---');
 
-    // client.messages
-    // .create({
-    //     body: req.body.messageBody,
-    //     to: req.body.messageTo,
-    //     from: from,
-    //     messagingServiceSid: msgService,
-    // })
-    // .then(message => {
-    //     // console.log(message);
-    //     res.send(message);
-    // })
-    // .catch(error => {
-    //     // console.log(error);
-    //     res.send(error);
-    // });
+    client.messages
+    .create({
+        body: 'hardcode val body & to', //req.body.messageBody,
+        to: '+6282298524375', //req.body.messageTo,
+        from: from,
+        messagingServiceSid: msgService,
+        statusCallback: 'https://fa-server-0.herokuapp.com/api/status-sms',
+    })
+    .then(message => {
+        // console.log(message);
+        res.send(message);
+    })
+    .catch(error => {
+        // console.log(error);
+        res.send(error);
+    });
+});
+
+app.post('/api/status-sms', (req, res) => {
+    console.log('---start callback---');
+    console.log(req);
+    console.log('---end callback---');
 });
 
 // create server
