@@ -5,5 +5,8 @@
     "express": "^4.17.1",
     "request": "^2.88.2",
     "twilio": "^3.71.3"
-  }
+  },
+  "scripts": {
+    "start": "node app.js"
+}
 }
