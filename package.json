@@ -4,6 +4,7 @@
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "request": "^2.88.2",
+    "require": "^2.4.20",
     "twilio": "^3.71.3"
   },
   "scripts": {
