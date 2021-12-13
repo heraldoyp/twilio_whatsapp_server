@@ -32,10 +32,10 @@ app.post('/api/send-sms', (req, res) => {
 
     client.messages
     .create({
-        body: req.body.messageBody,
-        to: req.body.messageTo,
-        from: from,
-        messagingServiceSid: msgService,
+        Body: req.body.messageBody,
+        To: req.body.messageTo,
+        From: from,
+        MessagingServiceSid: msgService,
     })
     .then(message => {
         // console.log(message);
