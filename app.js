@@ -30,23 +30,26 @@ app.post('/api/send-sms', (req, res) => {
 
     const client = require('twilio')(accountSid, authToken);
 
+    console.log("---start---");
     console.log(req);
+    console.log(req.body);
+    console.log("---end---");
 
-    client.messages
-    .create({
-        body: req.body.messageBody,
-        to: req.body.messageTo,
-        from: from,
-        messagingServiceSid: msgService,
-    })
-    .then(message => {
-        // console.log(message);
-        res.send(message);
-    })
-    .catch(error => {
-        // console.log(error);
-        res.send(error);
-    });
+    // client.messages
+    // .create({
+    //     body: req.body.messageBody,
+    //     to: req.body.messageTo,
+    //     from: from,
+    //     messagingServiceSid: msgService,
+    // })
+    // .then(message => {
+    //     // console.log(message);
+    //     res.send(message);
+    // })
+    // .catch(error => {
+    //     // console.log(error);
+    //     res.send(error);
+    // });
 });
 
 // create server
