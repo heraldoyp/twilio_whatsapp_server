@@ -31,7 +31,7 @@ app.post('/api/send-sms', (req, res) => {
     const client = require('twilio')(accountSid, authToken);
 
     console.log("---start---");
-    console.log(req.body);
+    console.log(req);
     console.log("---end---");
 
     // client.messages
