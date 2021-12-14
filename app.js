@@ -14,7 +14,7 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 
 // handle body request
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // define routes
@@ -32,28 +32,22 @@ app.post('/api/send-sms', (req, res) => {
 
     const client = require('twilio')(accountSid, authToken);
 
-    console.log('---start req---');
-    console.log(req.body);
-    console.log(req.body.messageBody);
-    console.log(req.body.messageTo);
-    console.log('---end req---');
-
-    // client.messages
-    // .create({
-    //     body: req.body.messageBody,
-    //     to: req.body.messageTo,
-    //     from: from,
-    //     messagingServiceSid: msgService,
-    //     statusCallback: 'https://fa-server-0.herokuapp.com/api/status-sms',
-    // })
-    // .then(message => {
-    //     // console.log(message);
-    //     res.send(message);
-    // })
-    // .catch(error => {
-    //     // console.log(error);
-    //     res.send(error);
-    // });
+    client.messages
+    .create({
+        body: req.body.messageBody,
+        to: req.body.messageTo,
+        from: from,
+        messagingServiceSid: msgService,
+        statusCallback: 'https://fa-server-0.herokuapp.com/api/status-sms',
+    })
+    .then(message => {
+        // console.log(message);
+        res.send(message);
+    })
+    .catch(error => {
+        // console.log(error);
+        res.send(error);
+    });
 });
 
 app.post('/api/status-sms', (req, res) => {
