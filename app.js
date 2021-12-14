@@ -15,7 +15,7 @@ app.set('port', process.env.PORT || 3000);
 
 // handle body request
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // define routes
 app.get('/', (req, res) => {
@@ -36,15 +36,12 @@ app.post('/api/send-sms', (req, res) => {
     console.log(req.body);
     console.log(req.body.messageBody);
     console.log(req.body.messageTo);
-    console.log(req.body.inArguments[0]);
-    console.log(req.body.inArguments[0].messageBody);
-    console.log(req.body.inArguments[0].messageTo);
     console.log('---end req---');
 
     // client.messages
     // .create({
-    //     body: 'hardcode val body & to', //req.body.messageBody,
-    //     to: '+6282298524375', //req.body.messageTo,
+    //     body: req.body.messageBody,
+    //     to: req.body.messageTo,
     //     from: from,
     //     messagingServiceSid: msgService,
     //     statusCallback: 'https://fa-server-0.herokuapp.com/api/status-sms',
