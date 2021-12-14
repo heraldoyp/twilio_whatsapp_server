@@ -14,8 +14,8 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 
 // handle body request
-app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // define routes
 app.get('/', (req, res) => {
