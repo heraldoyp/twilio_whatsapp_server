@@ -7,6 +7,7 @@ exports.send = async function send(data) {
     return new Promise((resolve, reject) => {
         try {
             const client = require('twilio')(accountSid, authToken);
+            var success;
 
             client.messages
             .create({
@@ -17,12 +18,10 @@ exports.send = async function send(data) {
                 // statusCallback: 'https://fa-gateway-twilio.herokuapp.com/api/sms/callback',
             })
             .then(message => {
-                console.log('---start send response---');
-                console.log(message);
-                console.log('---end send response---');
+                success = message;
             });
 
-            return resolve(message);
+            return resolve(success);
         } catch (error) {
             return reject(error);
         }
