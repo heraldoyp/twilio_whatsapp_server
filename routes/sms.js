@@ -5,14 +5,10 @@ exports.send = async function(req, res) {
         body: req.body.messageBody,
         to: req.body.messageTo,
     };
+    let result = await sms.send(data);
 
-    await sms.send(data)
-    .then(function(result) {
-        console.log('---start res result---');
-        console.log(result);
-        console.log('---end res result---');
-        res.send(result);
-    });
+    console.log(result);
+    res.send(result);
 };
 
 exports.callback = function(req, res) {
