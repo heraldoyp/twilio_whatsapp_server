@@ -5,9 +5,11 @@ exports.send = function(req, res) {
         body: req.body.messageBody,
         to: req.body.messageTo,
     };
-    var result = sms.send(data);
+    var result = sms.preSend(data);
 
+    console.log('---start final result---');
     console.log(result);
+    console.log('---end final result---');
     res.send(result);
 };
 
