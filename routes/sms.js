@@ -7,9 +7,9 @@ exports.send = async function(req, res) {
     };
     var result = await sms.send(data);
 
-    console.log('---start send result---');
+    console.log('---start res result---');
     console.log(result);
-    console.log('---end send result---');
+    console.log('---end res result---');
     res.send(result);
 };
 
