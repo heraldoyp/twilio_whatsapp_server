@@ -12,7 +12,7 @@ async function preSend(data) {
         to: data.to,
         from: from,
         messagingServiceSid: msgService,
-        statusCallback: 'https://fa-server-0.herokuapp.com/api/sms/callback',
+        statusCallback: 'https://fa-gateway-twilio.herokuapp.com/api/sms/callback',
     })
     .then(message => {
         // console.log(message);
