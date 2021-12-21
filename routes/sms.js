@@ -1,15 +1,15 @@
 var sms = require('../modules/sms');
 
-exports.send = function(req, res) {
+exports.send = async function(req, res) {
     var data = {
         body: req.body.messageBody,
         to: req.body.messageTo,
     };
-    var result = sms.preSend(data);
+    var result = await sms.send(data);
 
-    console.log('---start final result---');
+    console.log('---start send result---');
     console.log(result);
-    console.log('---end final result---');
+    console.log('---end send result---');
     res.send(result);
 };
 
