@@ -1,16 +1,18 @@
 var sms = require('../modules/sms');
 
-exports.send = function(req, res) {
+exports.send = async function(req, res) {
     var data = {
         body: req.body.messageBody,
         to: req.body.messageTo,
     };
-    var result = sms.send(data);
 
-    console.log('---start res result---');
-    console.log(result);
-    console.log('---end res result---');
-    res.send(result);
+    await sms.send(data)
+    .then(function(result) {
+        console.log('---start res result---');
+        console.log(result);
+        console.log('---end res result---');
+        res.send(result);
+    });
 };
 
 exports.callback = function(req, res) {
