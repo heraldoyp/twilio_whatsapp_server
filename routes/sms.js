@@ -13,8 +13,7 @@ exports.send = async function(req, res) {
 
 exports.callback = function(req, res) {
     console.log('---start callback---');
-    console.log(req.body.MessageSid);
-    console.log(req.body.MessageStatus);
+    console.log(req.body);
     console.log('---end callback---');
 
     res.sendStatus(200);
