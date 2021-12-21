@@ -6,7 +6,7 @@ const msgService = process.env.TWILIO_MSG_SERVICES;
 exports.send = async function send(data) {
     const client = require('twilio')(accountSid, authToken);
 
-    client.messages
+    return client.messages
     .create({
         body: data.body,
         to: data.to,

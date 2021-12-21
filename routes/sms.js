@@ -1,7 +1,7 @@
 var sms = require('../modules/sms');
 
 exports.send = async function(req, res) {
-    var data = {
+    let data = {
         body: req.body.messageBody,
         to: req.body.messageTo,
     };
