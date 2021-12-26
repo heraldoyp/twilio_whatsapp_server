@@ -1,20 +1,69 @@
 var sms = require('../modules/sms');
 
-exports.send = async function(req, res) {
-    let data = {
-        body: req.body.messageBody,
-        to: req.body.messageTo,
-    };
-    let result = await sms.send(data);
+const externalKeyDEResponse = '482C0F2F-73E3-48EA-BE95-5261473004E2';
+const externalKeyDEStatusCallback = 'A58666A7-F118-409E-BB29-950BF12AF3DD';
 
-    console.log(result);
-    res.send(result);
+exports.send = async function(req, res) {
+    let smsRequestBody = {
+        body: req.body.messageBody,
+        to: req.body.messageTo
+    };
+    let smsSend = await sms.send(smsRequestBody);
+    let insertDE;
+
+    if (smsSend.status === 200) {
+        let smsResponseBody = {
+            sid: smsSend.body.sid,
+            account_sid: smsSend.body.accountSid,
+            api_version: smsSend.body.apiVersion,
+            body: smsSend.body.body,
+            date_created: smsSend.body.dateCreated,
+            date_sent: smsSend.body.dateSend,
+            date_updated: smsSend.body.dateUpdated,
+            direction: smsSend.body.direction,
+            error_code: smsSend.body.errorCode,
+            error_message: smsSend.body.errorMessage,
+            from: smsSend.body.from,
+            messaging_service_sid: smsSend.body.messagingServiceSid,
+            num_media: smsSend.body.numMedia,
+            num_segments: smsSend.body.numSegments,
+            price: smsSend.body.price,
+            price_unit: smsSend.body.priceUnit,
+            status: smsSend.body.status,
+            to: smsSend.body.to,
+            subresource_uris: JSON.stringify(smsSend.body.subresourceUris),
+            uri: smsSend.body.uri
+        };
+
+        insertDE = sms.insertDE(smsResponseBody, externalKeyDEResponse);
+    } else {
+        insertDE = {status: 400};
+    };
+
+    console.log({sms_send: smsSend, insert_de: insertDE});
+
+    res.send({sms_send: smsSend, insert_de: insertDE});
 };
 
-exports.callback = function(req, res) {
-    console.log('---start callback---');
-    console.log(req.body);
-    console.log('---end callback---');
+exports.callback = async function(req, res) {
+    let id = await sms.generateID(externalKeyDEStatusCallback);
+    let statusCallback = {
+        id: id,
+        message_sid: req.body.messageSid,
+        message_status: req.body.messageStatus,
+        messaging_service_sid: req.body.messagingServiceSid,
+        from: req.body.From,
+        to: req.body.To,
+        account_sid: req.body.AccountSid,
+        sms_sid: req.body.SmsSid,
+        sms_status: req.body.SmsStatus,
+        api_version: req.body.ApiVersion
+    };
+    let insertDE = await sms.insertDE(statusCallback, externalKeyDEStatusCallback);
 
+    console.log(statusCallback);
+    console.log(insertDE);
+
+    // send response to webhook (twilio)
     res.sendStatus(200);
 };
