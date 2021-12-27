@@ -35,10 +35,10 @@ async function tokenDE() {
         account_id: '110006474'
     })
     .then(success => {
-        return success;
+        return {status: 200, body: success};
     })
     .catch(error => {
-        return error;
+        return {status: 400, body: error};
     });
 };
 
@@ -65,10 +65,10 @@ exports.insertDE = async function(data, externalKeyDE) {
             }
         )
         .then(success => {
-            return success;
+            return {status: 200, body: success};
         })
         .catch(error => {
-            return error;
+            return {status: 400, body: error};
         });
     };
 };
