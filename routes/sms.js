@@ -31,7 +31,6 @@ exports.send = async function(req, res) {
             price_unit: smsSend.body.priceUnit,
             status: smsSend.body.status,
             to: smsSend.body.to,
-            subresource_uris: JSON.stringify(smsSend.body.subresourceUris),
             uri: smsSend.body.uri
         };
 
