@@ -14,7 +14,7 @@ exports.send = async function(data) {
         to: data.to,
         from: from,
         messagingServiceSid: msgService,
-        // statusCallback: 'https://fa-gateway-twilio.herokuapp.com/api/sms/callback',
+        statusCallback: 'https://fa-gateway-twilio.herokuapp.com/api/sms/callback',
     })
     .then(success => {
         return {status: 200, body: success};

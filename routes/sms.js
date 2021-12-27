@@ -31,6 +31,7 @@ exports.send = async function(req, res) {
             price_unit: smsSend.body.priceUnit,
             status: smsSend.body.status,
             to: smsSend.body.to,
+            subresource_uris: JSON.stringify(smsSend.body.subresourceUris),
             uri: smsSend.body.uri
         };
 
@@ -39,9 +40,10 @@ exports.send = async function(req, res) {
         insertDE = {status: 400};
     };
 
-    console.log({sms_send: smsSend, insert_de: insertDE});
+    console.log(smsSend);
+    console.log(insertDE);
 
-    res.send({sms_send: smsSend, insert_de: insertDE});
+    res.send(smsSend);
 };
 
 exports.callback = async function(req, res) {
