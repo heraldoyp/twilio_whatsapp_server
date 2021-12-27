@@ -35,23 +35,23 @@ exports.send = async function(req, res) {
             uri: smsSend.body.uri
         };
 
-        insertDE = sms.insertDE(smsResponseBody, externalKeyDEResponse);
+        insertDE = await sms.insertDE(smsResponseBody, externalKeyDEResponse);
     } else {
         insertDE = {status: 400};
     };
 
-    console.log({sms_send: smsSend, insert_de: insertDE});
+    console.log({sms_send: smsResponseBody, insert_de: insertDE});
 
-    res.send({sms_send: smsSend, insert_de: insertDE});
+    res.send({sms_send: smsResponseBody, insert_de: insertDE});
 };
 
 exports.callback = async function(req, res) {
     let id = await sms.generateID(externalKeyDEStatusCallback);
     let statusCallback = {
         id: id,
-        message_sid: req.body.messageSid,
-        message_status: req.body.messageStatus,
-        messaging_service_sid: req.body.messagingServiceSid,
+        message_sid: req.body.MessageSid,
+        message_status: req.body.MessageStatus,
+        messaging_service_sid: req.body.MessagingServiceSid,
         from: req.body.From,
         to: req.body.To,
         account_sid: req.body.AccountSid,

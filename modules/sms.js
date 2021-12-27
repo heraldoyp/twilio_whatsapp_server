@@ -35,10 +35,10 @@ async function tokenDE() {
         account_id: '110006474'
     })
     .then(success => {
-        return {status: 200, body: success};
+        return success;
     })
     .catch(error => {
-        return {status: 400, body: error};
+        return error;
     });
 };
 
@@ -63,10 +63,10 @@ exports.insertDE = async function(data, externalKeyDE) {
             }
         )
         .then(success => {
-            return {status: 200, body: success};
+            return success;
         })
         .catch(error => {
-            return {status: 400, body: error};
+            return error;
         });
     } else {
         return {error: 'Failed to get access_token.'};
@@ -100,4 +100,4 @@ exports.generateID = async function(externalKeyDE) {
     } else {
         return '';
     };
-}
+};
