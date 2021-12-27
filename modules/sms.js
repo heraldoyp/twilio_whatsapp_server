@@ -47,7 +47,9 @@ exports.insertDE = async function(data, externalKeyDE) {
     let access_token;
     let rest_instance_url;
 
-    if (token.data !== undefined) {
+    if (token.data === undefined) {
+        return {error: 'Failed to get access_token.'};
+    } else {
         access_token = token.data.access_token;
         rest_instance_url = token.data.rest_instance_url;
         
@@ -68,8 +70,6 @@ exports.insertDE = async function(data, externalKeyDE) {
         .catch(error => {
             return error;
         });
-    } else {
-        return {error: 'Failed to get access_token.'};
     };
 };
 
@@ -79,7 +79,9 @@ exports.generateID = async function(externalKeyDE) {
     let access_token;
     let rest_instance_url;
 
-    if (token.data !== undefined) {
+    if (token.data === undefined) {
+        return '';
+    } else {
         access_token = token.data.access_token;
         rest_instance_url = token.data.rest_instance_url;
         
@@ -97,7 +99,5 @@ exports.generateID = async function(externalKeyDE) {
         .catch(error => {
             return '';
         });
-    } else {
-        return '';
     };
 };
