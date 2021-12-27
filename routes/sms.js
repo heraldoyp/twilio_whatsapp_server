@@ -47,22 +47,24 @@ exports.send = async function(req, res) {
 
 exports.callback = async function(req, res) {
     let id = await sms.generateID(externalKeyDEStatusCallback);
-    let statusCallback = {
-        id: id,
-        message_sid: req.body.MessageSid,
-        message_status: req.body.MessageStatus,
-        messaging_service_sid: req.body.MessagingServiceSid,
-        from: req.body.From,
-        to: req.body.To,
-        account_sid: req.body.AccountSid,
-        sms_sid: req.body.SmsSid,
-        sms_status: req.body.SmsStatus,
-        api_version: req.body.ApiVersion
-    };
-    let insertDE = await sms.insertDE(statusCallback, externalKeyDEStatusCallback);
 
-    console.log(statusCallback);
-    console.log(insertDE);
+    if (id !== '') {
+        let statusCallback = {
+            id: id,
+            message_sid: req.body.MessageSid,
+            message_status: req.body.MessageStatus,
+            messaging_service_sid: req.body.MessagingServiceSid,
+            from: req.body.From,
+            to: req.body.To,
+            account_sid: req.body.AccountSid,
+            sms_sid: req.body.SmsSid,
+            sms_status: req.body.SmsStatus,
+            api_version: req.body.ApiVersion
+        };
+        let insertDE = await sms.insertDE(statusCallback, externalKeyDEStatusCallback);
+    
+        console.log(insertDE);
+    };
 
     // send response to webhook (twilio)
     res.sendStatus(200);
