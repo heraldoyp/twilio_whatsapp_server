@@ -85,7 +85,7 @@ exports.generateID = async function(externalKeyDE) {
         access_token = token.data.access_token;
         rest_instance_url = token.data.rest_instance_url;
         
-        return axios.get(rest_instance_url + 'data/v1/customobjectdata/' + externalKeyDE + '/rowset?$page=1&$pagesize=1',
+        return axios.get(rest_instance_url + 'data/v1/customobjectdata/key/' + externalKeyDE + '/rowset?$page=1&$pagesize=1',
             {
                 headers: {
                     'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ exports.generateID = async function(externalKeyDE) {
             }
         )
         .then(success => {
-            return success.count + 1;
+            return success.data.count + 1;
         })
         .catch(error => {
             return '';
