@@ -10,10 +10,9 @@ exports.send = async function(req, res) {
     };
     let smsSend = await sms.send(smsRequestBody);
     let insertDE;
-    let smsResponseBody;
 
     if (smsSend.status === 200) {
-        smsResponseBody = {
+        let smsResponseBody = {
             sid: smsSend.body.sid,
             account_sid: smsSend.body.accountSid,
             api_version: smsSend.body.apiVersion,
@@ -41,9 +40,9 @@ exports.send = async function(req, res) {
         insertDE = {status: 400};
     };
 
-    console.log({sms_send: smsResponseBody, insert_de: insertDE});
+    console.log({sms_send: smsSend, insert_de: insertDE});
 
-    res.send({sms_send: smsResponseBody, insert_de: insertDE});
+    res.send({sms_send: smsSend, insert_de: insertDE});
 };
 
 exports.callback = async function(req, res) {

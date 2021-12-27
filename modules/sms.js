@@ -47,11 +47,11 @@ exports.insertDE = async function(data, externalKeyDE) {
     let access_token;
     let rest_instance_url;
 
-    if (token.data === undefined) {
+    if (token.body.data === undefined) {
         return {error: 'Failed to get access_token.'};
     } else {
-        access_token = token.data.access_token;
-        rest_instance_url = token.data.rest_instance_url;
+        access_token = token.body.data.access_token;
+        rest_instance_url = token.body.data.rest_instance_url;
         
         return axios.post(rest_instance_url + 'data/v1/async/dataextensions/key:' + externalKeyDE + '/rows',    
             {
@@ -79,11 +79,11 @@ exports.generateID = async function(externalKeyDE) {
     let access_token;
     let rest_instance_url;
 
-    if (token.data === undefined) {
+    if (token.body.data === undefined) {
         return '';
     } else {
-        access_token = token.data.access_token;
-        rest_instance_url = token.data.rest_instance_url;
+        access_token = token.body.data.access_token;
+        rest_instance_url = token.body.data.rest_instance_url;
         
         return axios.get(rest_instance_url + 'data/v1/customobjectdata/key/' + externalKeyDE + '/rowset?$page=1&$pagesize=1',
             {
