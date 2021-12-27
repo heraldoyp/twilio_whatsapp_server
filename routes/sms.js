@@ -10,9 +10,10 @@ exports.send = async function(req, res) {
     };
     let smsSend = await sms.send(smsRequestBody);
     let insertDE;
+    let smsResponseBody;
 
     if (smsSend.status === 200) {
-        let smsResponseBody = {
+        smsResponseBody = {
             sid: smsSend.body.sid,
             account_sid: smsSend.body.accountSid,
             api_version: smsSend.body.apiVersion,

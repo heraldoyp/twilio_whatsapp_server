@@ -17,10 +17,10 @@ exports.send = async function(data) {
         // statusCallback: 'https://fa-gateway-twilio.herokuapp.com/api/sms/callback',
     })
     .then(success => {
-        return success;
+        return {status: 200, body: success};
     })
     .catch(error => {
-        return error;
+        return {status: 400, body: error};
     });
 };
 
