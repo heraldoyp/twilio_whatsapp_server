@@ -1,17 +1,26 @@
+// define dependencies
 var sms = require('../modules/sms');
+var db = require('../modules/db');
+var de = require('../modules/de');
 
+// define external key de for response
 const externalKeyDEResponse = '482C0F2F-73E3-48EA-BE95-5261473004E2';
+// define external key de for callback
 const externalKeyDEStatusCallback = 'A58666A7-F118-409E-BB29-950BF12AF3DD';
 
 exports.send = async function(req, res) {
+    // get request body
     let smsRequestBody = {
         body: req.body.messageBody,
         to: req.body.messageTo
     };
+
+    // send sms
     let smsSend = await sms.send(smsRequestBody);
     let insertDE;
 
     if (smsSend.status === 200) {
+        // define response body
         let smsResponseBody = {
             sid: smsSend.body.sid,
             account_sid: smsSend.body.accountSid,
@@ -35,7 +44,8 @@ exports.send = async function(req, res) {
             uri: smsSend.body.uri
         };
 
-        insertDE = await sms.insertDE(smsResponseBody, externalKeyDEResponse);
+        // insert response to de
+        insertDE = await de.insert(smsResponseBody, externalKeyDEResponse);
     } else {
         insertDE = {status: 400};
     };
@@ -47,7 +57,7 @@ exports.send = async function(req, res) {
 };
 
 exports.callback = async function(req, res) {
-    let id = await sms.generateID(externalKeyDEStatusCallback);
+    let id = await de.getStatusCallbackID(externalKeyDEStatusCallback);
 
     if (id !== '') {
         let statusCallback = {
@@ -62,7 +72,11 @@ exports.callback = async function(req, res) {
             sms_status: req.body.SmsStatus,
             api_version: req.body.ApiVersion
         };
-        let insertDE = await sms.insertDE(statusCallback, externalKeyDEStatusCallback);
+        let insertDE = await de.insert(statusCallback, externalKeyDEStatusCallback);
+
+        if (insertDE.status === 200) {
+            db.update('status_callback_id', id);
+        };
     
         console.log(insertDE);
     };
