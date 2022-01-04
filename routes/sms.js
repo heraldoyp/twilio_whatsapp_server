@@ -57,7 +57,7 @@ exports.send = async function(req, res) {
 };
 
 exports.callback = async function(req, res) {
-    let id = await de.getStatusCallbackID(externalKeyDEStatusCallback);
+    let id = await db.getStatusCallbackID(externalKeyDEStatusCallback);
 
     if (id !== '') {
         let statusCallback = {
