@@ -52,10 +52,6 @@ exports.getStatusCallbackID = function() {
 
 // insert record
 exports.insert = function(table, column, value) {
-    // console.log(table);
-    // console.log(column);
-    // console.log(value);
-
     console.log("INSERT INTO " + table + " (" + column + ") VALUES (" + value + ")");
 
     pool.query("INSERT INTO " + table + " (" + column + ") VALUES (" + value + ")", (err, res) => {
