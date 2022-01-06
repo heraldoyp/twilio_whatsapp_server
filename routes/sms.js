@@ -90,7 +90,7 @@ exports.send = async function(req, res) {
 exports.callback = async function(req, res) {
     let id = "NEXTVAL('seq_status_callback_id')";
     
-    db.insert('twilio_sms_status_callback',`${id},${req.body.MessageSid},${req.body.MessageStatus},${req.body.MessagingServiceSid},${req.body.From},${req.body.To},${req.body.AccountSid},${req.body.SmsSid},${req.body.SmsStatus},${req.body.ApiVersion}`);
+    db.insert('twilio_sms_status_callback', `id,message_sid,message_status,messaging_service_sid,"from","to",account_sid,sms_sid,sms_status,api_version`, `${id},${req.body.MessageSid},${req.body.MessageStatus},${req.body.MessagingServiceSid},${req.body.From},${req.body.To},${req.body.AccountSid},${req.body.SmsSid},${req.body.SmsStatus},${req.body.ApiVersion}`);
 
     // send response to webhook (twilio)
     res.sendStatus(200);

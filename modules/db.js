@@ -51,8 +51,12 @@ exports.getStatusCallbackID = function() {
 };
 
 // insert record
-exports.insert = function(table, value) {
-    pool.query("INSERT INTO " + table + " (id,message_sid,message_status,messaging_service_sid,from,to,account_sid,sms_sid,sms_status,api_version) VALUES (" + value + ")", (err, res) => {
+exports.insert = function(table, column, value) {
+    console.log(table);
+    console.log(column);
+    console.log(value);
+    
+    pool.query("INSERT INTO " + table + " (" + column + ") VALUES (" + value + ")", (err, res) => {
         if (err) {
             console.log(err);
         } else {
