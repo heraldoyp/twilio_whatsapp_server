@@ -56,30 +56,41 @@ exports.send = async function(req, res) {
     res.send(smsSend);
 };
 
-exports.callback = async function(req, res) {
-    let id = await db.getStatusCallbackID(externalKeyDEStatusCallback);
+// callback insert into data extension
+// exports.callback = async function(req, res) {
+//     let id = await db.getStatusCallbackID(externalKeyDEStatusCallback);
 
-    if (id !== '') {
-        let statusCallback = {
-            id: id,
-            message_sid: req.body.MessageSid,
-            message_status: req.body.MessageStatus,
-            messaging_service_sid: req.body.MessagingServiceSid,
-            from: req.body.From,
-            to: req.body.To,
-            account_sid: req.body.AccountSid,
-            sms_sid: req.body.SmsSid,
-            sms_status: req.body.SmsStatus,
-            api_version: req.body.ApiVersion
-        };
-        let insertDE = await de.insert(statusCallback, externalKeyDEStatusCallback);
+//     if (id !== '') {
+//         let statusCallback = {
+//             id: id,
+//             message_sid: req.body.MessageSid,
+//             message_status: req.body.MessageStatus,
+//             messaging_service_sid: req.body.MessagingServiceSid,
+//             from: req.body.From,
+//             to: req.body.To,
+//             account_sid: req.body.AccountSid,
+//             sms_sid: req.body.SmsSid,
+//             sms_status: req.body.SmsStatus,
+//             api_version: req.body.ApiVersion
+//         };
+//         let insertDE = await de.insert(statusCallback, externalKeyDEStatusCallback);
 
-        if (insertDE.status === 200) {
-            db.update('status_callback_id', id);
-        };
+//         if (insertDE.status === 200) {
+//             db.update('status_callback_id', id);
+//         };
     
-        console.log(insertDE);
-    };
+//         console.log(insertDE);
+//     };
+
+//     // send response to webhook (twilio)
+//     res.sendStatus(200);
+// };
+
+// callback insert into database
+exports.callback = async function(req, res) {
+    let id = "NEXTVAL('seq_status_callback_id')";
+    
+    db.insert('twilio_sms_status_callback',`${id},${req.body.MessageSid},${req.body.MessageStatus},${req.body.MessagingServiceSid},${req.body.From},${req.body.To},${req.body.AccountSid},${req.body.SmsSid},${req.body.SmsStatus},${req.body.ApiVersion}`);
 
     // send response to webhook (twilio)
     res.sendStatus(200);

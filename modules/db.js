@@ -35,7 +35,7 @@ exports.getToken = function() {
             };
         });
     });
-}
+};
 
 // auto increment for callback ID
 exports.getStatusCallbackID = function() {
@@ -47,5 +47,16 @@ exports.getStatusCallbackID = function() {
                 resolve(parseInt(res.rows[0].value) + 1);
             };
         });
+    });
+};
+
+// insert record
+exports.insert = function(table, value) {
+    pool.query("INSERT INTO " + table + " VALUES (" + value + ")", (err, res) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log('Successfully inserted into ' + table + '.');
+        };
     });
 };
