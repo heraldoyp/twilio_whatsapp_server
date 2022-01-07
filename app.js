@@ -29,7 +29,11 @@ app.get('/', (req, res) => {
 app.post('/api/sms/send', sms.send);
 app.post('/api/sms/callback', sms.callback);
 
-app.post('/api/whatsapp/send', whatsapp.send);
+app.post('/api/whatsapp/execute', whatsapp.execute);
+app.post('/api/whatsapp/save', whatsapp.save);
+app.post('/api/whatsapp/publish', whatsapp.publish);
+app.post('/api/whatsapp/stop', whatsapp.stop);
+app.post('/api/whatsapp/validate', whatsapp.validate);
 app.post('/api/whatsapp/callback', whatsapp.callback);
 
 // create server
