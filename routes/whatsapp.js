@@ -2,6 +2,7 @@ var whatsapp = require('../modules/whatsapp');
 
 exports.send = function(req, res) {
     
+    console.log("=====IN ARGUMENTS=====")
     console.log(req.body.inArguments[0]);
     res.send("ini dari whastapp send")
 };
