@@ -1,4 +1,5 @@
 var whatsapp = require('../modules/whatsapp');
+var util = require('util');
 
 // customActivity.js main arguments
 exports.execute = async function (req, res) {
