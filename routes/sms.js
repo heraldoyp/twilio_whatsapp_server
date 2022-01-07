@@ -3,10 +3,9 @@ var sms = require('../modules/sms');
 var db = require('../modules/db');
 var de = require('../modules/de');
 
-// define external key de for response
+// define external key
 const externalKeyDEResponse = '482C0F2F-73E3-48EA-BE95-5261473004E2';
-// define external key de for callback
-const externalKeyDEStatusCallback = 'A58666A7-F118-409E-BB29-950BF12AF3DD';
+const externalKeyDEStatusCallback = 'A58666A7-F118-409E-BB29-950BF12AF3DD'; // depcrecated
 
 exports.send = async function(req, res) {
     // get request body

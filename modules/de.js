@@ -2,7 +2,7 @@
 var axios = require('axios');
 var db = require('./db');
 
-// define url
+// define endpoint api
 const auth_url = 'https://mcx3dk6gqx05byn626r3yqc9-hl0.auth.marketingcloudapis.com';
 const rest_instance_url = 'https://mcx3dk6gqx05byn626r3yqc9-hl0.rest.marketingcloudapis.com/';
 
@@ -52,6 +52,9 @@ exports.insert = async function insert(data, externalKeyDE) {
             result = {status: 400, body: error};
         });
     
+        
+    // check if error cause not authorized, renew access_token & update to db > recall insert method
+    // nice to have cronjob for renew access_token, we can add it later :)
     if (result.status === 400) {
         if (result.body.response.status === 401) {
             newToken = await renewToken();
