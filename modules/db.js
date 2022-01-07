@@ -37,18 +37,18 @@ exports.getToken = function() {
     });
 };
 
-// auto increment for callback ID
-exports.getStatusCallbackID = function() {
-    return new Promise (function(resolve, reject) {
-        pool.query("SELECT value FROM sfmc_logs WHERE key = 'status_callback_id'", (err, res) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(parseInt(res.rows[0].value) + 1);
-            };
-        });
-    });
-};
+// auto increment for callback ID (deprecated)
+// exports.getStatusCallbackID = function() {
+//     return new Promise (function(resolve, reject) {
+//         pool.query("SELECT value FROM sfmc_logs WHERE key = 'status_callback_id'", (err, res) => {
+//             if (err) {
+//                 reject(err);
+//             } else {
+//                 resolve(parseInt(res.rows[0].value) + 1);
+//             };
+//         });
+//     });
+// };
 
 // insert record
 exports.insert = function(table, column, value) {

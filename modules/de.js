@@ -2,7 +2,7 @@
 var axios = require('axios');
 var db = require('./db');
 
-// define variables
+// define url
 const auth_url = 'https://mcx3dk6gqx05byn626r3yqc9-hl0.auth.marketingcloudapis.com';
 const rest_instance_url = 'https://mcx3dk6gqx05byn626r3yqc9-hl0.rest.marketingcloudapis.com/';
 

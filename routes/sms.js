@@ -56,7 +56,7 @@ exports.send = async function(req, res) {
     res.send(smsSend);
 };
 
-// callback insert into data extension
+// callback insert into data extension (deprecated)
 // exports.callback = async function(req, res) {
 //     let id = await db.getStatusCallbackID(externalKeyDEStatusCallback);
 
