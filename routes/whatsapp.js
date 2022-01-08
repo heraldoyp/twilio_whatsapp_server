@@ -7,9 +7,9 @@ exports.execute = async function (req, res) {
         body: req.body.inArguments[0]
     }
 
-    console.log(util.inspect(waRequestBody));
+    // console.log(util.inspect(waRequestBody));
     var sendWhatsapp = await whatsapp.send(waRequestBody);
-
+    
     if(sendWhatsapp.status == 200){
         waResponseBody = {
             "sid": sendWhatsapp.sid,

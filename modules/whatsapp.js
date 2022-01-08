@@ -3,7 +3,8 @@ var axios = require('axios');
 var db = require('./db');
 var de = require('./de');
 var twilio = require('twilio');
-//require('dotenv').config({ path: '../.env'}); // Uninstall sebelum publish
+var util = require('util');
+require('dotenv').config(); // Uninstall sebelum publish
 
 // Send Whatsapp Message
 exports.send = async function(data) {
@@ -13,9 +14,9 @@ exports.send = async function(data) {
 
     client.messages 
     .create({ 
-        body: data.Message, 
-        from: 'whatsapp:+'+data.Sender,       
-        to: 'whatsapp:+'+data.PhoneNumber
+        body: data.body.Message, 
+        from: 'whatsapp:+'+data.body.Sender,       
+        to: 'whatsapp:+'+data.body.PhoneNumber
     }) 
     .then(response => {
         console.log(response);
