@@ -6,7 +6,7 @@ exports.execute = async function (req, res) {
     let waRequestBody = {
         body: req.body.inArguments[0]
     }
-    console.log(JSON.stringify(waRequestBody));
+    console.log(util.inspect(waRequestBody));
     res.status(200).send("Execute Success")
     //var sendWhatsapp = await whatsapp.send(waRequestBody);
 
