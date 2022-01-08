@@ -1,12 +1,13 @@
 // define dependencies
 const { Pool } = require('pg');
+require('dotenv').config(); // Uninstall dan apus code sebelum publish
 
 // create connection
 const pool = new Pool({
-    user: 'mmlejmywrivqjm',
-    host: 'ec2-52-200-188-218.compute-1.amazonaws.com',
-    database: 'd6bj1259frb0eb',
-    password: '243b7172d72552f38aa14fe01d729387297960a01ed5ebf143ed7a81aea261e2',
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
     port: 5432,
     ssl: {
         rejectUnauthorized: false

@@ -1,21 +1,23 @@
 // define dependencies
 var axios = require('axios');
 var db = require('./db');
+var util = require('util');
+require('dotenv').config(); // Uninstall dan apus code sebelum publish
 
 // define endpoint api
-const auth_url = 'https://mcx3dk6gqx05byn626r3yqc9-hl0.auth.marketingcloudapis.com';
-const rest_instance_url = 'https://mcx3dk6gqx05byn626r3yqc9-hl0.rest.marketingcloudapis.com/';
+const auth_url = process.env.DE_AUTH_URL;
+const rest_instance_url = process.env.DE_REST_INSTANCE_URL;
 
 // request new access_token
 async function renewToken() {
     return axios.post(auth_url + '/v2/token', {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': process.env.DE_CONTENT_TYPE
         },
-        grant_type: 'client_credentials',
-        client_id: 'u5tcbvwgpy4b4a6wefyf1jij',
-        client_secret: 'SowaSYrKPmM7ZLzEBE3A0DBc',
-        account_id: '110006474'
+        grant_type: process.env.DE_GRANT_TYPE,
+        client_id: process.env.DE_CLIENT_ID,
+        client_secret: process.env.DE_CLIENT_SECRET,
+        account_id: process.env.DE_ACCOUNT_ID
     })
     .then(success => {
         // update access_token to database
@@ -33,6 +35,9 @@ exports.insert = async function insert(data, externalKeyDE) {
     let result;
     let access_token = await db.getToken();
     let newToken;
+
+    console.log("waResponse =>");
+    console.log(util.inspect(data));
 
     await axios.post(rest_instance_url + 'data/v1/async/dataextensions/key:' + externalKeyDE + '/rows',    
             {
