@@ -1,6 +1,12 @@
 var whatsapp = require('../modules/whatsapp');
 var util = require('util');
 
+async function getResponse(data){
+    console.log("Send Whatsapp => ");
+    console.log(util.inspect(data));
+    return data;
+}
+
 // customActivity.js main arguments
 exports.execute = async function (req, res) {
     let waRequestBody = {
@@ -8,9 +14,9 @@ exports.execute = async function (req, res) {
     }
 
     // console.log(util.inspect(waRequestBody));
-    var sendWhatsapp = await whatsapp.send(waRequestBody);
-    
-    if(sendWhatsapp.status == 200){
+    let sendWhatsapp = await whatsapp.send(waRequestBody);
+
+    if(sendWhatsapp.status === 200){
         waResponseBody = {
             "sid": sendWhatsapp.sid,
             "date_created": sendWhatsapp.date_created,
@@ -33,7 +39,7 @@ exports.execute = async function (req, res) {
             "uri": sendWhatsapp.uri,
             "subresource_uris": JSON.stringify(sendWhatsapp.subresource_uris)
         }
-
+        console.log("waResponse =>");
         console.log(util.inspect(waResponseBody));
         logData(req);
         res.status(200).send("Execute");    

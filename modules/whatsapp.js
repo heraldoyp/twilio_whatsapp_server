@@ -12,18 +12,16 @@ exports.send = async function(data) {
     const authToken = process.env.TWILIO_AUTH_TOKEN; 
     const client = twilio(accountSid, authToken); 
 
-    client.messages 
+    return client.messages 
     .create({ 
         body: data.body.Message, 
         from: 'whatsapp:+'+data.body.Sender,       
         to: 'whatsapp:+'+data.body.PhoneNumber
     }) 
     .then(response => {
-        console.log(response);
         return {status: 200, body: response};
     }) 
     .catch(error => {
-        console.log(error)
         return {status: 400, body: error};
     });
 };
