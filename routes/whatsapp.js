@@ -71,11 +71,19 @@ exports.validate = async function (req, res) {
 
 // callback insert to database
 exports.callback = async function(req, res) {
+    var upsertDE;
+    var waCallbackResponse;
+
     if(req.body){
-        console.log(req.body);
-        let upsertDE; 
+        console.log(req.body); 
+        waCallbackResponse = {
+            "sid": req.body.SmsSid,
+            "status": req.body.MessageStatus,
+            "date_updated": Date.now()
+        }
+
         
-        upsertDE = await de.upsert(req.body, dataExtensionSource);
+        upsertDE = await de.upsert(waCallbackResponse, dataExtensionSource);
         res.status(200).send("Callback Success");
     }else{
         res.status(400).send("Callback Error");
