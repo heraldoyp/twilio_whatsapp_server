@@ -73,13 +73,14 @@ exports.validate = async function (req, res) {
 exports.callback = async function(req, res) {
     var upsertDE;
     var waCallbackResponse;
+    var date = new Date();
 
     if(req.body){
         console.log(req.body); 
         waCallbackResponse = {
             "sid": req.body.SmsSid,
             "status": req.body.MessageStatus,
-            "date_updated": Date.now().toISOString()
+            "date_updated": date.toISOString()
         }
 
         
