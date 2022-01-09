@@ -79,7 +79,7 @@ exports.callback = async function(req, res) {
         waCallbackResponse = {
             "sid": req.body.SmsSid,
             "status": req.body.MessageStatus,
-            "date_updated": Date.now()
+            "date_updated": Date.now().toISOString()
         }
 
         
