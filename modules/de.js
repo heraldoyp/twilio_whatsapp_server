@@ -1,7 +1,6 @@
 // define dependencies
 var axios = require('axios');
 var db = require('./db');
-var util = require('util');
 require('dotenv').config(); // Uninstall dan apus code sebelum publish
 
 // define endpoint api
@@ -35,9 +34,6 @@ exports.insert = async function insert(data, externalKeyDE) {
     let result;
     let access_token = await db.getToken();
     let newToken;
-
-    console.log("waResponse =>");
-    console.log(util.inspect(data));
 
     await axios.post(rest_instance_url + 'data/v1/async/dataextensions/key:' + externalKeyDE + '/rows',    
             {

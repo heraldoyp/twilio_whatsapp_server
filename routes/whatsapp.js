@@ -69,7 +69,8 @@ exports.validate = async function (req, res) {
 
 // callback insert to database
 exports.callback = function(req, res) {
-
+    console.log(req.body)
+    res.status(200).send("Dari Callback")
 };
 
 //custom function for debugging
