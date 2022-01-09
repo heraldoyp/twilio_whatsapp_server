@@ -1,7 +1,8 @@
-var whatsapp = require('../modules/whatsapp');
-var db = require('../modules/db');
-var de = require('../modules/de');
-var util = require('util');
+const whatsapp = require('../modules/whatsapp');
+const db = require('../modules/db');
+const de = require('../modules/de');
+const util = require('util');
+var dataExtensionSource = "";
 
 // customActivity.js main arguments
 exports.execute = async function (req, res) {
@@ -12,6 +13,7 @@ exports.execute = async function (req, res) {
     // console.log(util.inspect(waRequestBody));
     let sendWhatsapp = await whatsapp.send(waRequestBody);
     let insertDE;
+    dataExtensionSource = waRequestBody.body.DataExtensionResponse;
 
     if(sendWhatsapp.status === 200){
         waResponseBody = {
@@ -68,9 +70,16 @@ exports.validate = async function (req, res) {
 }
 
 // callback insert to database
-exports.callback = function(req, res) {
-    console.log(req.body)
-    res.status(200).send("Dari Callback")
+exports.callback = async function(req, res) {
+    if(req.body){
+        console.log(req.body);
+        let upsertDE; 
+        
+        upsertDE = await de.upsert(req.body, dataExtensionSource);
+        res.status(200).send("Callback Success");
+    }else{
+        res.status(400).send("Callback Error");
+    }
 };
 
 //custom function for debugging

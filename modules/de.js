@@ -74,3 +74,49 @@ exports.insert = async function insert(data, externalKeyDE) {
     console.log(result);
     return result;
 };
+
+// insert to data extension
+exports.upsert = async function insert(data, externalKeyDE) {
+    let result;
+    let access_token = await db.getToken();
+    let newToken;
+
+    await axios.put(rest_instance_url + 'data/v1/async/dataextensions/key:' + externalKeyDE + '/rows',    
+            {
+                items: [data]
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + access_token
+                }
+            }
+        )
+        .then(success => {
+            result = {status: 200, body: success};
+        })
+        .catch(error => {
+            result = {status: 400, body: error};
+        });
+    
+        
+    // check if error cause not authorized, renew access_token & update to db > recall insert method
+    // nice to have cronjob for renew access_token, we can add it later :)
+    if (result.status === 400) {
+        if (result.body.response.status === 401) {
+            newToken = await renewToken();
+
+            if (newToken.status === 200) {
+                console.log(newToken.body.data.access_token);
+                insert(data, externalKeyDE);
+                return newToken.body.data.access_token;
+            } else {
+                console.log('Failed to get access_token.');
+                return 'Failed to get access_token.';
+            };
+        };
+    };
+
+    console.log(result);
+    return result;
+};
