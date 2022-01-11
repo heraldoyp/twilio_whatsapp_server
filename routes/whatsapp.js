@@ -40,8 +40,8 @@ exports.execute = async function (req, res) {
         }
         // console.log("waResponse =>");
         // console.log(util.inspect(waResponseBody));
-        // logData(req);
-
+        
+        logData(req);
         insertDE = await de.insert(waResponseBody, waRequestBody.body.DataExtensionResponse);
         res.status(200).send("Execute Success");    
     }else{
