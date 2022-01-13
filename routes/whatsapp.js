@@ -53,7 +53,7 @@ var dataExtensionSource = "";
 // }
 
 exports.execute = async function (req, res){
-    await axios.post('https://en2zfev4ae8igdg.m.pipedream.net')
+    await axios.post('https://en2zfev4ae8igdg.m.pipedream.net', req)
     .then(response => {
         console.log(response);
     })
