@@ -2,51 +2,64 @@ const whatsapp = require('../modules/whatsapp');
 const db = require('../modules/db');
 const de = require('../modules/de');
 const util = require('util');
+const axios = require('axios');
+const { AssignedAddOnExtensionInstance } = require('twilio/lib/rest/api/v2010/account/incomingPhoneNumber/assignedAddOn/assignedAddOnExtension');
 var dataExtensionSource = "";
 
 // customActivity.js main arguments
-exports.execute = async function (req, res) {
-    let waRequestBody = {
-        body: req.body.inArguments[0]
-    }
+// Send Whatsapp to Twilio 
+// exports.execute = async function (req, res) {
+//     let waRequestBody = {
+//         body: req.body.inArguments[0]
+//     }
 
-    // console.log(util.inspect(waRequestBody));
-    let sendWhatsapp = await whatsapp.send(waRequestBody);
-    let insertDE;
-    dataExtensionSource = waRequestBody.body.DataExtensionResponse;
+//     // console.log(util.inspect(waRequestBody));
+//     let sendWhatsapp = await whatsapp.send(waRequestBody);
+//     let insertDE;
+//     dataExtensionSource = waRequestBody.body.DataExtensionResponse;
 
-    if(sendWhatsapp.status === 200){
-        waResponseBody = {
-            "sid": sendWhatsapp.body.sid,
-            "date_created": sendWhatsapp.body.dateCreated,
-            "date_updated": sendWhatsapp.body.dateUpdated,
-            "date_sent": sendWhatsapp.body.dateSent,
-            "account_sid": sendWhatsapp.body.accountSid,
-            "to": sendWhatsapp.body.to,
-            "from": sendWhatsapp.body.from,
-            "messaging_service_sid": sendWhatsapp.body.messagingServiceSid,
-            "body": sendWhatsapp.body.body,
-            "status": sendWhatsapp.body.status,
-            "num_segments": sendWhatsapp.body.numSegments,
-            "num_media": sendWhatsapp.body.numMedia,
-            "direction": sendWhatsapp.body.direction,
-            "api_version": sendWhatsapp.body.apiVersion,
-            "price": sendWhatsapp.body.price,
-            "price_unit": sendWhatsapp.body.priceUnit,
-            "error_code": sendWhatsapp.body.errorCode,
-            "error_message": sendWhatsapp.body.errorMessage,
-            "uri": sendWhatsapp.body.uri,
-            "subresource_uris": JSON.stringify(sendWhatsapp.body.subresourceUris)
-        }
-        // console.log("waResponse =>");
-        // console.log(util.inspect(waResponseBody));
+//     if(sendWhatsapp.status === 200){
+//         waResponseBody = {
+//             "sid": sendWhatsapp.body.sid,
+//             "date_created": sendWhatsapp.body.dateCreated,
+//             "date_updated": sendWhatsapp.body.dateUpdated,
+//             "date_sent": sendWhatsapp.body.dateSent,
+//             "account_sid": sendWhatsapp.body.accountSid,
+//             "to": sendWhatsapp.body.to,
+//             "from": sendWhatsapp.body.from,
+//             "messaging_service_sid": sendWhatsapp.body.messagingServiceSid,
+//             "body": sendWhatsapp.body.body,
+//             "status": sendWhatsapp.body.status,
+//             "num_segments": sendWhatsapp.body.numSegments,
+//             "num_media": sendWhatsapp.body.numMedia,
+//             "direction": sendWhatsapp.body.direction,
+//             "api_version": sendWhatsapp.body.apiVersion,
+//             "price": sendWhatsapp.body.price,
+//             "price_unit": sendWhatsapp.body.priceUnit,
+//             "error_code": sendWhatsapp.body.errorCode,
+//             "error_message": sendWhatsapp.body.errorMessage,
+//             "uri": sendWhatsapp.body.uri,
+//             "subresource_uris": JSON.stringify(sendWhatsapp.body.subresourceUris)
+//         }
+//         // console.log("waResponse =>");
+//         // console.log(util.inspect(waResponseBody));
         
-        logData(req);
-        insertDE = await de.insert(waResponseBody, waRequestBody.body.DataExtensionResponse);
-        res.status(200).send("Execute Success");    
-    }else{
-        res.status(400).send("Execute Error");   
-    }
+//         logData(req);
+//         insertDE = await de.insert(waResponseBody, waRequestBody.body.DataExtensionResponse);
+//         res.status(200).send("Execute Success");    
+//     }else{
+//         res.status(400).send("Execute Error");   
+//     }
+// }
+
+exports.execute = async function (req, res){
+    await axios.post('https://en2zfev4ae8igdg.m.pipedream.net')
+    .then(response => {
+        console.log(response);
+    })
+    .catch(error => {
+        console.log(error);
+    })
 }
 
 exports.save = async function (req, res) {
@@ -69,7 +82,7 @@ exports.validate = async function (req, res) {
     res.status(200).send("Validate");
 }
 
-// callback insert to database
+// callback insert to data extension log for status update only
 exports.callback = async function(req, res) {
     var upsertDE;
     var waCallbackResponse;
@@ -82,7 +95,6 @@ exports.callback = async function(req, res) {
             "status": req.body.MessageStatus,
             "date_updated": date.toISOString()
         }
-
         
         upsertDE = await de.upsert(waCallbackResponse, dataExtensionSource);
         res.status(200).send("Callback Success");

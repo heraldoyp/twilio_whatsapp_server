@@ -1,6 +1,6 @@
 // define dependencies
 const { Pool } = require('pg');
-require('dotenv').config(); // Uninstall dan apus code sebelum publish
+require('dotenv').config(); // Uninstall package dan apus code sebelum publish
 
 // create connection
 const pool = new Pool({
