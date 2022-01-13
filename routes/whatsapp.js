@@ -56,7 +56,7 @@ exports.execute = async function (req, res){
     console.log("PAYLOAD => "+req)
     await axios.post('https://en2zfev4ae8igdg.m.pipedream.net', req)
     .then(response => {
-        console.log(response);
+        console.log(util.inspect(response));
     })
     .catch(error => {
         console.log(error);
