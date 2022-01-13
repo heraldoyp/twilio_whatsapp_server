@@ -54,7 +54,7 @@ var dataExtensionSource = "";
 
 exports.execute = async function (req, res){
     console.log("PAYLOAD => "+util.inspect(req));
-    await axios.post('https://en2zfev4ae8igdg.m.pipedream.net', req)
+    await axios.post('https://httpreq.com/dawn-math-orbunhff/record', req)
     .then(response => {
         console.log(response);
     })
